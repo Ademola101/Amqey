@@ -44,12 +44,21 @@ Before you begin, ensure you have the following installed:
 ### 1. **Navigate to the backend directory**
 ```bash
    cd backend
-   # or wherever your backend code is located
 ```
 
 ### 2. **Install dependencies**
 
    Install all required packages:
+```bash
+   npm install
+   # or
+   yarn install
+```
+
+   This will install:
+   - NestJS framework and core modules
+   - Validation libraries (class-validator, class-transformer)
+   - File upload dependencies (multer)
 ```bash
    npm install
    # or
