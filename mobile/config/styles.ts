@@ -1,0 +1,147 @@
+import { StyleSheet } from 'react-native';
+import { theme } from './theme';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: theme.spacing.xlg,
+    paddingTop: theme.spacing.xxlg,
+    paddingBottom: theme.spacing.lg,
+    backgroundColor: theme.colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.border,
+  },
+  addButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: theme.colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: theme.colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  listContent: {
+    padding: theme.spacing.lg,
+  },
+  listContentEmpty: {
+    flex: 1,
+  },
+  card: {
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: 16,
+    marginBottom: theme.spacing.lg,
+    overflow: 'hidden',
+    shadowColor: theme.colors.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  imageContainer: {
+    width: '100%',
+    height: 200,
+    backgroundColor: theme.colors.border,
+    position: 'relative',
+  },
+  productImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  outOfStockBadge: {
+    position: 'absolute',
+    top: theme.spacing.lg,
+    right: theme.spacing.lg,
+    backgroundColor: theme.colors.accentPink,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.s,
+    borderRadius: 8,
+  },
+  cardContent: {
+    padding: theme.spacing.lg,
+  },
+  categoryBadge: {
+    backgroundColor: theme.colors.primaryLight,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.s,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+    marginBottom: theme.spacing.md,
+  },
+  productName: {
+    marginBottom: theme.spacing.s,
+  },
+  description: {
+    marginBottom: theme.spacing.lg,
+    lineHeight: 20,
+  },
+  priceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  inStockIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  inStockDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: theme.colors.success,
+    marginRight: 4,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: theme.spacing.xxlg,
+  },
+  emptyIconContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: theme.colors.primaryLight,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing.xlg,
+  },
+  emptyTitle: {
+    marginBottom: theme.spacing.md,
+    textAlign: 'center',
+  },
+  emptyDescription: {
+    textAlign: 'center',
+    marginBottom: theme.spacing.xxlg,
+    lineHeight: 22,
+  },
+  emptyStateButton: {
+    backgroundColor: theme.colors.primary,
+    paddingHorizontal: theme.spacing.xxlg,
+    paddingVertical: theme.spacing.lg,
+    borderRadius: 12,
+    shadowColor: theme.colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  skeleton: {
+    backgroundColor: theme.colors.border,
+  },
+  skeletonText: {
+    backgroundColor: theme.colors.border,
+    borderRadius: 4,
+  },
+});
