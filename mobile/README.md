@@ -3,6 +3,18 @@
 A React Native mobile application for managing product inventory, built with Expo and TypeScript. This app allows users to view, add, update, and delete products by connecting to a backend API.
 
 ---
+## 📸 Screenshots
+
+<p align="center">
+  <img src="./assets/screenshot1.png" alt="Home Screen" width="250"/>
+  <img src="./assets/screenshot2.png" alt="Product List" width="250"/>
+  <img src="./assets/screenshot3.png" alt="Product Details" width="250"/>
+</p>
+
+<p align="center">
+  <img src="./assets/screenshot4.png" alt="Add Product" width="250"/>
+  <img src="./assets/screenshot5.png" alt="Edit Product" width="250"/>
+</p>
 
 ## 🚀 Getting Started
 

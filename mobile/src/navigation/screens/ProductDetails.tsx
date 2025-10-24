@@ -19,6 +19,9 @@ import { useToastMessage } from '../../hooks/useToastMessage';
 import { ProductCardSkeleton } from './Home/ProductSkeleton';
 import { ImagePickerButton } from './AddProduct/ImagePickerButton';
 import { categories } from '../../utils/categories';
+import { baseURL } from '../../../config/api';
+import { formatToMoney } from '../../utils/formatToMoney';
+
 
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
@@ -259,7 +262,7 @@ const ProductDetails = () => {
           // View Mode
           <>
             <View style={styles.imageContainer}>
-              <Image source={{ uri: product.imageUrl }} style={styles.productImage} resizeMode="cover" />
+              <Image source={{ uri: `${baseURL}/uploads/products/${product.imageUrl?.split('/').pop()}` }} style={styles.productImage} resizeMode="cover" />
               <View style={[styles.stockBadge, product.inStock ? styles.inStockBadge : styles.outOfStockBadge]}>
                 <IonicIcon
                   name={product.inStock ? 'checkmark-circle' : 'close-circle'}
@@ -277,7 +280,7 @@ const ProductDetails = () => {
 
             <View style={styles.detailsCard}>
               <View style={styles.priceRow}>
-                <Text variant="h3" text={`$${product.price.toFixed(2)}`} color={theme.colors.primary} />
+                <Text variant="h3" text={formatToMoney(product.price)} color={theme.colors.primary} />
                 <View style={styles.categoryBadge}>
                   <Text variant="body2Bold" text={product.category} color={theme.colors.primary} />
                 </View>

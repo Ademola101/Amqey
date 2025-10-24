@@ -7,7 +7,7 @@ async function bootstrap() {
 
   // Enable CORS for mobile app
   app.enableCors({
-    origin: ['https://b711274bcd9c.ngrok-free.app'],
+    origin: ['https://2062207da8df.ngrok-free.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
