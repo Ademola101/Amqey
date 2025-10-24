@@ -1,33 +1,23 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class UploadService {
-  private s3Client: S3Client;
-  private bucketName: string;
+  private uploadPath: string;
 
   constructor(private configService: ConfigService) {
-    const region = this.configService.get<string>('AWS_REGION');
-    const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID');
-    const secretAccessKey = this.configService.get<string>(
-      'AWS_SECRET_ACCESS_KEY',
-    );
-    const bucketName = this.configService.get<string>('AWS_S3_BUCKET_NAME');
+    // Store uploads in 'uploads' folder at project root
+    this.uploadPath = path.join(process.cwd(), 'uploads', 'products');
+    this.ensureUploadDirectory();
+  }
 
-    if (!region || !accessKeyId || !secretAccessKey || !bucketName) {
-      throw new Error('Missing AWS configuration in environment variables');
+  private ensureUploadDirectory() {
+    if (!fs.existsSync(this.uploadPath)) {
+      fs.mkdirSync(this.uploadPath, { recursive: true });
     }
-
-    this.s3Client = new S3Client({
-      region,
-      credentials: {
-        accessKeyId,
-        secretAccessKey,
-      },
-    });
-    this.bucketName = bucketName;
   }
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
@@ -52,36 +42,48 @@ export class UploadService {
       throw new BadRequestException('File size must be less than 5MB');
     }
 
-    const fileExtension = file.originalname.split('.').pop();
-    const fileName = `products/${uuidv4()}.${fileExtension}`;
-
     try {
-      const command = new PutObjectCommand({
-        Bucket: this.bucketName,
-        Key: fileName,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-        ACL: 'public-read',
-      });
+      // Ensure we always have a valid extension (fallback to 'bin' if none)
+      const fileExtension = file.originalname.split('.').pop() || 'bin';
+      const fileName = `${uuidv4()}.${fileExtension}`;
+      const filePath = path.join(this.uploadPath, fileName);
 
-      await this.s3Client.send(command);
+      // Write file to disk asynchronously
+      await fs.promises.writeFile(filePath, file.buffer);
 
-      const fileUrl = `https://${this.bucketName}.s3.${this.configService.get('AWS_REGION')}.amazonaws.com/${fileName}`;
+      // Get server URL from config or use default
+      const serverUrl = this.configService.get<string>(
+        'SERVER_URL',
+        'http://localhost:3000',
+      );
+      const fileUrl = `${serverUrl}/uploads/products/${fileName}`;
+
       return fileUrl;
     } catch (error: unknown) {
-      let message: string;
-      if (error instanceof Error) {
-        message = error.message;
-      } else if (typeof error === 'string') {
-        message = error;
-      } else {
-        try {
-          message = JSON.stringify(error);
-        } catch {
-          message = 'Unknown error';
-        }
-      }
+      const message =
+        error instanceof Error
+          ? error.message
+          : typeof error === 'string'
+            ? error
+            : String(error);
       throw new BadRequestException(`Failed to upload file: ${message}`);
+    }
+  }
+  deleteFile(imageUrl: string): void {
+    try {
+      // Extract filename from URL
+      const fileName = imageUrl.split('/').pop();
+      if (!fileName) {
+        // nothing to delete
+        return;
+      }
+      const filePath = path.join(this.uploadPath, fileName);
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    } catch (error) {
+      console.error('Error deleting file:', error);
     }
   }
 }

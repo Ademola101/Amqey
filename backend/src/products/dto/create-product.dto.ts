@@ -3,7 +3,6 @@ import {
   IsNumber,
   IsBoolean,
   IsOptional,
-  IsUrl,
   Min,
   IsNotEmpty,
 } from 'class-validator';
@@ -26,7 +25,7 @@ export class CreateProductDto {
   category: string;
 
   @IsOptional()
-  @IsUrl()
+  @IsString()
   imageUrl?: string;
 
   @IsOptional()
