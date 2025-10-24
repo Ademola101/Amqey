@@ -28,3 +28,31 @@ export const useAddProduct = () => {
     },
   });
 }
+
+export const useDeleteProduct = () => {
+  return useMutation({
+    mutationFn: async (productId: string): Promise<void> => {
+      await api.delete(`/products/${productId}`);
+    },
+  });
+}
+
+export const useUpdateProduct = () => {
+  return useMutation({
+    mutationFn: async (updatedProduct: Product): Promise<Product> => {
+      const response = await api.put(`/products/${updatedProduct.id}`, updatedProduct);
+      return response.data;
+    },
+  });
+} 
+
+export const useGetProductById = (productId: string) => {
+  return useQuery({
+    queryKey: ['product', productId],
+    queryFn: async (): Promise<Product> => {
+      const response = await api.get(`/products/${productId}`);
+      return response.data;
+    },
+    enabled: !!productId,
+  });
+}

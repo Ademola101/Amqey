@@ -16,6 +16,7 @@ import { InputField } from '../../../components/InputField';
 import { PickerField } from '../../../components/PickerField';
 import { SwitchField } from '../../../components/SwitchField';
 import { useNavigation } from '@react-navigation/native';
+import { useToastMessage } from '../../../hooks/useToastMessage';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
@@ -39,6 +40,7 @@ const categories = [
 ];
 
 const AddProduct = () => {
+    const { showToast } = useToastMessage();
     const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
@@ -95,7 +97,7 @@ const AddProduct = () => {
             setImageUrl(url);
           },
           onError: () => {
-            Alert.alert('Upload Error', 'Failed to upload image. Please try again.');
+            showToast('Image upload failed. Please try again.', 'danger');
           },
         });
     }
@@ -116,19 +118,14 @@ const AddProduct = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['products'] });
         
-        Alert.alert('Success', 'Product added successfully!', [
-          {
-            text: 'OK',
-            onPress: () => {
-              reset();
-              setImageUrl('');
-              navigation.goBack();
-            },
-          },
-        ]);
+        reset();
+        setImageUrl('');
+        showToast('Product added successfully', 'success');
+        navigation.goBack();
+
       },
       onError: (error) => {
-        Alert.alert('Error', 'Failed to add product. Please try again.');
+        showToast('Failed to add product. Please try again.', 'danger');
         console.error('Add product error:', error);
       },
     });
