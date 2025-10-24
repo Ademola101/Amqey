@@ -4,6 +4,7 @@ import { StyleSheet, View, Image, TouchableOpacity, ViewStyle } from 'react-nati
 
 import Text from './Text';
 import { theme } from '../../config/theme';
+import { baseURL } from '../../config/api';
 
 export interface Product {
   id: string;
@@ -31,7 +32,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onPress, styl
     >
       <View style={styles.imageContainer}>
         <Image 
-          source={{ uri: product.imageUrl || 'https://via.placeholder.com/400' }} 
+          // @ts-ignore
+          source={{ uri: `${baseURL}/uploads/products/${product?.imageUrl.split('/').pop()}` }}
           style={styles.productImage}
           resizeMode="cover"
         />

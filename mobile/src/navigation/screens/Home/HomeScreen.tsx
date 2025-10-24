@@ -9,19 +9,19 @@ import { EmptyState } from './EmptyState';
 import type { Product } from '../../../hooks/Product';
 import { ProductCard } from '../../../components/ProductCard';
 import { ProductCardSkeleton } from './ProductSkeleton';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const { data: products, isLoading } = useGetProducts();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<any>();
 
   const handleAddProduct = () => {
-    // Add your navigation logic here
-    console.log('Navigate to add product screen');
+    navigation.navigate('AddProduct' as never);
   };
 
   const handleProductPress = (product: Product) => {
-    // Add your navigation logic here
-    console.log('Product pressed:', product.id);
+    navigation.navigate('ProductDetails' as never, { productId: product.id } as never );
   };
 
   const renderProduct: ListRenderItem<Product> = ({ item }) => (
@@ -70,7 +70,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.white,
   },
   listContent: {
     padding: theme.spacing.lg,

@@ -11,15 +11,15 @@ interface EmptyStateProps {
 
 export const EmptyState: React.FC<EmptyStateProps> = ({ onAddPress }) => {
   return (
-    <View style={styles.emptyState}>
-      <View style={styles.emptyIconContainer}>
+    <View style={emptyStyles.emptyState}>
+      <View style={emptyStyles.emptyIconContainer}>
         <IonicIcon name="cube-outline" size={64} color={theme.colors.textTertiary} />
       </View>
       <Text 
         variant="h4" 
         text="No Products Yet" 
         color={theme.colors.textPrimary}
-        style={styles.emptyTitle}
+        style={emptyStyles.emptyTitle}
       />
       <Text 
         variant="body1" 
@@ -33,12 +33,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ onAddPress }) => {
         onPress={onAddPress}
         activeOpacity={0.8}
       >
-        <IonicIcon 
-          name="add-circle-outline" 
-          size={20} 
-          color={theme.colors.white}
-          
-        />
+        
         <Text variant="h6Bold" text="Add Product" color={theme.colors.white} />
       </TouchableOpacity>
     </View>

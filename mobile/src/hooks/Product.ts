@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import api from "../../config/axios";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import api from "../../config/api";
 export type Product = {
   id: string;
   name: string;
@@ -15,6 +15,15 @@ export const useGetProducts = () => {
     queryKey: ['products'],
     queryFn: async (): Promise<Product[]> => {
       const response = await api.get('/products');
+      return response.data;
+    },
+  });
+}
+
+export const useAddProduct = () => {
+  return useMutation({
+    mutationFn: async (newProduct: Omit<Product, 'id' | 'createdAt'>): Promise<Product> => {
+      const response = await api.post('/products', newProduct);
       return response.data;
     },
   });
