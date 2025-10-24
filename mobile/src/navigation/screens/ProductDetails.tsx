@@ -18,6 +18,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useToastMessage } from '../../hooks/useToastMessage';
 import { ProductCardSkeleton } from './Home/ProductSkeleton';
 import { ImagePickerButton } from './AddProduct/ImagePickerButton';
+import { categories } from '../../utils/categories';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
@@ -33,16 +34,7 @@ type RouteParams = {
   productId: string;
 };
 
-const categories = [
-  { label: 'Electronics', value: 'Electronics' },
-  { label: 'Fashion', value: 'Fashion' },
-  { label: 'Home', value: 'Home' },
-  { label: 'Sports', value: 'Sports' },
-  { label: 'Books', value: 'Books' },
-  { label: 'Toys', value: 'Toys' },
-  { label: 'Food', value: 'Food' },
-  { label: 'Other', value: 'Other' },
-];
+
 
 const ProductDetails = () => {
   const { showToast } = useToastMessage();
