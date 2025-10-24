@@ -5,6 +5,7 @@ import { StyleSheet, View, Image, TouchableOpacity, ViewStyle } from 'react-nati
 import Text from './Text';
 import { theme } from '../../config/theme';
 import { baseURL } from '../../config/api';
+import { formatToMoney } from '../utils/formatToMoney';
 
 export interface Product {
   id: string;
@@ -74,14 +75,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onPress, styl
         <View style={styles.priceRow}>
           <Text 
             variant="h5Bold" 
-            text={`$${product.price.toFixed(2)}`} 
-            color={theme.colors.primary}
+            text={formatToMoney(product.price)}
+            color={theme.colors.black}
           />
           {product.inStock && (
             <View style={styles.inStockIndicator}>
               <View style={styles.inStockDot} />
               <Text 
-                variant="body3" 
+                variant="body3Bold" 
                 text="In Stock" 
                 color={theme.colors.success}
               />

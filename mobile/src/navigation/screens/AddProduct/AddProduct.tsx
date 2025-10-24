@@ -39,6 +39,7 @@ const categories = [
 ];
 
 const AddProduct = () => {
+    const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
   const { mutate: addProduct, isPending } = useAddProduct();
@@ -121,7 +122,7 @@ const AddProduct = () => {
             onPress: () => {
               reset();
               setImageUrl('');
-              // Navigate back or to home screen
+              navigation.goBack();
             },
           },
         ]);
@@ -141,7 +142,7 @@ const AddProduct = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={[styles.header, { paddingTop: insets.top + theme.spacing.lg }]}>
-        <TouchableOpacity style={styles.backButton} onPress={() => {/* Navigate back */}}>
+        <TouchableOpacity style={styles.backButton} onPress={() => { navigation.goBack(); }}>
           <IonicIcon name="arrow-back" size={24} color={theme.colors.textPrimary} />
         </TouchableOpacity>
         <Text variant="h4" text="Add New Product" color={theme.colors.textPrimary} />
